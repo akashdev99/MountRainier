@@ -7,6 +7,7 @@ test_set = dataset[365:464,]
 
 #ordering dataset
 training_set<- training_set[seq(dim(training_set)[1],1),]
+test_set<- test_set[seq(dim(test_set)[1],1),]
 
 date=vector()
 #turning date into increment of days
@@ -16,12 +17,36 @@ for(x in 1:nrow(training_set)){
 }
 training_set = cbind(training_set,day=date)
 
+dates=vector()
+test_set<-test_set[,-1]
+c=265
+for(x in 1:100){
+  dates[x]<-(c+x)
+  
+}
+test_set = cbind(test_set,day=dates)
+
 #liner regressor
 training_set$day2 =training_set$day^2
 training_set$day3 =training_set$day^3
 training_set$day4 =training_set$day^4
+
+
 regressor = lm(formula = Temperature.AVG ~ day+day2+day3+day4,
                data = training_set)
+
+#svr
+library(e1071)
+regressor = svm(formula = Temperature.AVG ~ day,
+                data = training_set,
+                type = 'eps-regression',
+                kernel = 'radial')
+
+library(randomForest)
+set.seed(1234)
+regressor = randomForest(x = training_set,
+                         y = training_set$Temperature.AVG,
+                         ntree = 500)
 
 # Visualising the Training set results
 library(ggplot2)
@@ -33,3 +58,15 @@ ggplot() +
   ggtitle('date vs temperature (Training set)') +
   xlab('Date') +
   ylab('temperature')
+
+# Visualising the Test set results
+library(ggplot2)
+ggplot() +
+  geom_point(aes(x = test_set$day, y = test_set$Temperature.AVG),
+             colour = 'red') +
+  geom_line(aes(x = training_set$day, y = predict(regressor, newdata = training_set)),
+            colour = 'blue') +
+  ggtitle('date vs temperature (Training set)') +
+  xlab('Date') +
+  ylab('temperature')
+
