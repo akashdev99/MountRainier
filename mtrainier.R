@@ -1,8 +1,5 @@
 # Importing the dataset
 dataset = read.csv('Rainier_Weather.csv')
-# Importing the dataset
-
-dec = read.csv('December.csv')
 
 
 #splitting test and train
@@ -78,16 +75,16 @@ ggplot() +
   xlab('Date') +
   ylab('temperature')
 
-# Visualising the Training set results
-library(ggplot2)
-ggplot() +
-  geom_point(aes(x = training_set$day, y = training_set$Solare.Radiation.AVG),
-             colour = 'red') +
-  geom_line(aes(x = training_set$day, y = predict(regressor2, newdata = training_set)),
-            colour = 'blue') +
-  ggtitle('date vs temperature (Training set)') +
-  xlab('Date') +
-  ylab('Radiation')
+# Visualising the Training set results for solar radiation
+# library(ggplot2)
+# ggplot() +
+#   geom_point(aes(x = training_set$day, y = training_set$Solare.Radiation.AVG),
+#              colour = 'red') +
+#   geom_line(aes(x = training_set$day, y = predict(regressor, newdata = training_set)),
+#             colour = 'blue') +
+#   ggtitle('date vs Solar Radiation (Training set)') +
+#   xlab('Date') +
+#   ylab('Radiation')
 
 
 

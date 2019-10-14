@@ -17,8 +17,15 @@ oct = read.csv('Oct.csv')
 nov = read.csv('November.csv')
 dec = read.csv('December.csv')
 
+sep_t = read.csv('September_test.csv')
+oct_t = read.csv('October_test.csv')
+nov_t = read.csv('November_test.csv')
+dec_t = read.csv('December_test.csv')
+
 #making list of months
 months=list(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)
+
+months_test=list(oct_t,nov_t,dec_t)
 
 #adding higher degree variables
 i=1
@@ -85,7 +92,7 @@ models=list(regressor1,regressor2,regressor3,regressor4,regressor5,regressor6,re
             regressor11,regressor12)
 
 #change vlaue for different month;'s graph
-i=9
+i=12
 
 #check why while loop not plotting
 #while(i<=12){
@@ -98,6 +105,18 @@ i=9
   xlab('Date') +
   ylab('temperature')
   #i=i+1}
+  
+j=i-9
+#test set
+  ggplot() +
+    geom_point(aes(x = months_test[[j]]$Date, y = months_test[[j]]$Temperature.AVG),
+               colour = 'red') +
+    geom_line(aes(x = months[[i]]$Date, y = predict(models[[i]], newdata = months[[i]])),
+              colour = 'blue') +
+    ggtitle('date vs temperature (Training set)') +
+    xlab('Date') +
+    ylab('temperature')
+  
   
 
   
