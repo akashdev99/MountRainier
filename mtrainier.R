@@ -36,11 +36,11 @@ training_set$day4 =training_set$day^4
 regressor = lm(formula = Temperature.AVG ~ day+day2+day3+day4,
                data = training_set)
 
-library(e1071)
-regressor2 = svm(formula =Solare.Radiation.AVG ~ day,
-                data =training_set,
-                type = 'eps-regression',
-                kernel = 'radial')
+# library(e1071)
+# regressor2 = svm(formula =Solare.Radiation.AVG ~ day,
+#                 data =training_set,
+#                 type = 'eps-regression',
+#                 kernel = 'radial')
 
 # 
 # #svr

@@ -113,7 +113,7 @@ j=i-9
                colour = 'red') +
     geom_line(aes(x = months[[i]]$Date, y = predict(models[[i]], newdata = months[[i]])),
               colour = 'blue') +
-    ggtitle('date vs temperature (Training set)') +
+    ggtitle('date vs temperature (Test set)') +
     xlab('Date') +
     ylab('temperature')
   
