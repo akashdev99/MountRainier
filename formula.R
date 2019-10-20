@@ -1,8 +1,10 @@
+#import the dataset
 dataset = read.csv('testing1.csv')
 
 #adding score to each column
 score =vector()
 
+#set attributes according to the dataset 
 for(x in 1:nrow(dataset)){
   sum=0
   if(dataset$Temperature[x]<=35 && dataset$Temperature[x]>=25){
@@ -19,4 +21,5 @@ for(x in 1:nrow(dataset)){
   }
   score[x]<-sum
 }
+
 dataset = cbind(dataset,success_rate=score)
