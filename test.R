@@ -1,0 +1,6 @@
+d= read.csv('January.csv')
+scatter.smooth(x=d$Date, y=d$Temperature, main="Temp-Date")
+scatter.smooth(x=d$Date, y=d$Humidity, main="Humidity-Date")
+scatter.smooth(x=d$Date, y=d$WindS, main="Winds-Date")
+scatter.smooth(x=d$Date, y=d$WindD, main="WindD-Date")
+scatter.smooth(x=d$Date, y=d$SolarR, main="SolarR-Date")
