@@ -1,3 +1,4 @@
+###########################START###################################
 # Importing the dataset
 dataset = read.csv('Rainier_Weather.csv')
 
@@ -42,6 +43,7 @@ regressor_solar = svm(formula =Solare.Radiation.AVG ~ day,
                 data =training_set,
                 type = 'eps-regression',
                 kernel = 'radial')
+############################END#############################
 
 #Ranom Forest humidity
 library(randomForest)
@@ -61,23 +63,6 @@ training_set_wind =training_set_wind[,-3:-5]
 regressor_wind = randomForest(x = training_set_wind,
                               y = training_set$Wind.Speed.Daily.AVG,
                               ntree = 500)
-
-# 
-# #svr
-# # library(e1071)
-# # regressor = svm(formula = Temperature.AVG ~ day,
-# #                 data = training_set,
-# #                 type = 'eps-regression',
-# #                 kernel = 'radial')
-
-# library(randomForest)
-# set.seed(1234)
-# regressor = randomForest(x = training_set,
-#                          y = training_set$Temperature.AVG,
-#                          ntree = 500)
-
-
-
 
 # Visualising the Training set results solar radiation
 library(ggplot2)
@@ -184,10 +169,12 @@ start.month=starts[[1]][2]
 ends=strsplit(rang.end,split="/",fixed=TRUE)
 end.day = ends[[1]][1]
 end.month=ends[[1]][2]
-
+############################START#########################
 #predicting attributes
+#############Cchange value for different dates below######################
 pred_start = 1
 pred_end = 6
+
 dates_1 = vector()
 dates_2 =vector()
 dates_3 =vector()
@@ -225,7 +212,37 @@ if(pred_start==1){
 #pedicting attributes
 pred_temp=predict(regressor_temp, data.frame(train_x =user_set_temp ))
 pred_solar=predict(regressor_solar, data.frame(train_x =user_set_solar ))
+#364 == 1,363 == 2 ...
 pred_wind = predict(regressor_wind, newdata = training_set_wind)
 pred_humid = predict(regressor_humid, newdata = training_set_humid)
+
+score =vector()
+#Scoring the date range
+for( x in 1:range){
+  sum=0
+  if(pred_temp[x]<=35 && pred_temp[x]>=25){
+    sum=sum+0.25
+  }
+  if(pred_humid[x]<=30 && pred_humid[x]>=77){
+    sum=sum+0.25
+  }
+  if(pred_wind[x]<=28){
+    sum=sum+0.25
+  }
+  if(pred_solar[x]<=80){
+    sum=sum+0.25
+  }
+  print(sum)
+  score[x]<-sum
+}
+
+
+######################END##############################
+
+
+
+
+
+
 
 
