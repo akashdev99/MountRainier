@@ -43,7 +43,7 @@ regressor_solar = svm(formula =Solare.Radiation.AVG ~ day,
                 data =training_set,
                 type = 'eps-regression',
                 kernel = 'radial')
-############################END#############################
+
 
 #Ranom Forest humidity
 library(randomForest)
@@ -63,7 +63,7 @@ training_set_wind =training_set_wind[,-3:-5]
 regressor_wind = randomForest(x = training_set_wind,
                               y = training_set$Wind.Speed.Daily.AVG,
                               ntree = 500)
-
+##########################END#############################
 # Visualising the Training set results solar radiation
 library(ggplot2)
 ggplot() +
@@ -160,20 +160,43 @@ ggplot() +
 
 
 #INput from the user
-rang.start = readline(prompt="please enter the start=")
-rang.end = readline(prompt="please enter the end=")
-starts=strsplit(rang.start,split="/",fixed=TRUE)
-start.day =starts[[1]][1]
-start.month=starts[[1]][2]
 
-ends=strsplit(rang.end,split="/",fixed=TRUE)
-end.day = ends[[1]][1]
-end.month=ends[[1]][2]
+my.month_start<-readline(prompt="Enter start Month")
+my.day_start<-readline(prompt="Enter Day ")
+my.day_start<-as.integer(my.day_start)
+#l<-vector(mode="list", length=12)
+#names(l)<-c("January","February","March","April","May","June","July","August","September","October","November","December")
+#l[[1]]<-0;l[[2]]<-31;l[[3]]<-59;l[[4]]<-90;l[[5]]<-120;l[[6]]<-151;l[[7]]<-181;l[[8]]<-212;l[[9]]<-243;l[[10]]<-273;l[[11]]<-304;l[[12]]<-334;
+#print(paste("Converted Day:",my.day))
+#a<-l[1]
+#print(paste("Converted Day:",l$a))
+x<-c(0,31,59,90,120,151,181,212,243,273,304,334)
+names(x)<-c("January","February","March","April","May","June","July","August","September","October","November","December")
+cm_start<-x[[my.month_start]]
+pred_start<-cm_start+my.day_start
+
+
+my.month_end<-readline(prompt="Enter End Month ")
+my.day_end<-readline(prompt="Enter End Day ")
+my.day_end<-as.integer(my.day_end)
+#l<-vector(mode="list", length=12)
+#names(l)<-c("January","February","March","April","May","June","July","August","September","October","November","December")
+#l[[1]]<-0;l[[2]]<-31;l[[3]]<-59;l[[4]]<-90;l[[5]]<-120;l[[6]]<-151;l[[7]]<-181;l[[8]]<-212;l[[9]]<-243;l[[10]]<-273;l[[11]]<-304;l[[12]]<-334;
+#print(paste("Converted Day:",my.day))
+#a<-l[1]
+#print(paste("Converted Day:",l$a))
+x<-c(0,31,59,90,120,151,181,212,243,273,304,334)
+names(x)<-c("January","February","March","April","May","June","July","August","September","October","November","December")
+cm_end<-x[[my.month_end]]
+pred_end<-cm_end+my.day_end
+
+
+
 ############################START#########################
 #predicting attributes
 #############Cchange value for different dates below######################
-pred_start = 1
-pred_end = 6
+# pred_start = 1
+# pred_end = 6
 
 dates_1 = vector()
 dates_2 =vector()
@@ -236,6 +259,7 @@ for( x in 1:range){
   score[x]<-sum
 }
 
+final = data.frame(day,score)
 
 ######################END##############################
 
